@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f9fafb;
+  --foreground: #040609;
+
+  --card: #ffffff;
+  --card-foreground: #040609;
+
+  --primary: #0072db;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f0f2f5;
+  --muted: #f0f2f5;
+
+  --muted-foreground: #4f5661;
+  --border: #dcdee1;
+
+  --input: #f1f2f3;
+  --ring: #0072db;
+
+  --success: #008c00;
+  --destructive: #d40c1a;
+}
+
+/* Light Theme */
+.light {
+  --background: #f9fafb;
+  --foreground: #040609;
+  --card: #ffffff;
+  --card-foreground: #040609;
+  --popover: #ffffff;
+  --popover-foreground: #040609;
+  --primary: #0072db;
+  --primary-foreground: #ffffff;
+  --secondary: #f0f2f5;
+  --secondary-foreground: #090b0f;
+  --muted: #f0f2f5;
+  --muted-foreground: #4f5661;
+  --accent: #0072db;
+  --accent-foreground: #ffffff;
+  --destructive: #d40c1a;
+  --destructive-foreground: #ffffff;
+  --border: #dcdee1;
+  --input: #f1f2f3;
+  --ring: #0072db;
+  --success: #008c00;
+}
+
+/* Dark Theme */
+.dark {
+  --background: #000001;
+  --foreground: #f8f8f8;
+  --card: #050607;
+  --card-foreground: #f8f8f8;
+  --popover: #050607;
+  --popover-foreground: #f8f8f8;
+  --primary: #0088f2;
+  --primary-foreground: #ffffff;
+  --secondary: #101214;
+  --secondary-foreground: #f8f8f8;
+  --muted: #101214;
+  --muted-foreground: #6e7278;
+  --accent: #0088f2;
+  --accent-foreground: #ffffff;
+  --destructive: #e7000b;
+  --destructive-foreground: #f8f8f8;
+  --border: #181b1f;
+  --input: #010202;
+  --ring: #0088f2;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* background-color: #000001; */
+  background: var(--background);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.08 0.005 260);
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.25 0.01 260);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.35 0.01 260);
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Stagger delays for children */
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
+}
+.stagger-6 {
+  animation-delay: 0.6s;
+}
+
+/* Link underline animation */
+.link-underline {
+  position: relative;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
