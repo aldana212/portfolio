@@ -57,7 +57,7 @@ const Hero = () => {
                 <ArrowrightIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
-                href="/cv.pdf"
+                href="/Daniel_Aldana_CV.pdf"
                 download
                 className="inline-flex items-center gap-2 px-8 py-4 text-base font-semibold text-(--foreground) bg-transparent border border-border rounded-xl hover:bg-secondary/50 transition-all"
               >
