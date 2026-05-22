@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import CustomInput from "./CustomInput";
+import { sendEmail } from "../config/emailjs";
 
 const Contact = () => {
   const sectionRef = useRef(null);
+  const formRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -29,20 +31,31 @@ const Contact = () => {
     return () => observer.disconnect();
   }, []);
 
-    const handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
     setValue((presentValue) => ({ ...presentValue, [name]: value }));
   };
 
-   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    setIsSubmitting(false)
-    // Reset form
-    e.currentTarget.reset()
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      await sendEmail(formRef.current);
+
+      setValue({
+        name: "",
+        email: "",
+        message: "",
+      });
+
+      e.currentTarget.reset();
+    } catch (error) {
+      console.error("Error enviando email:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contacto" ref={sectionRef} className="py-32 lg:py-40">
@@ -99,7 +112,9 @@ const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <div
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
           className={`
           p-8 lg:p-12 rounded-3xl bg-(--card) border border-(--border)
            transition-all duration-600 delay-400
@@ -141,6 +156,8 @@ const Contact = () => {
               name="message"
               required
               rows={5}
+              value={value.message}
+              onChange={handleChange}
               placeholder="Cuéntame sobre tu proyecto..."
               className="w-full h-[130px] bg-transparent resize-none px-[20px] py-[18px] rounded-[16px] border border-(--border) placeholder:text-(--muted-foreground)/50 focus:outline-none focus:border-(--primary)
         focus:ring-(--primary)/10      text-[16px] text-(--foreground) 
@@ -151,7 +168,6 @@ const Contact = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            onClick={handleSubmit}
             disabled={isSubmitting}
             className={`
               w-full flex items-center justify-center gap-2 px-8 py-5 rounded-xl
@@ -170,7 +186,7 @@ const Contact = () => {
               </>
             )}
           </button>
-        </div>
+        </form>
       </div>
     </section>
   );
